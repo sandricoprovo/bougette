@@ -1,5 +1,10 @@
 node_modules
 .DS_*
+.DS_Store
+*.log
+.build/
+*.db
+db
 
 # dotenv environment variable files
 .env
