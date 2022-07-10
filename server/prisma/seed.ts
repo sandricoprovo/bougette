@@ -11,7 +11,7 @@ async function seed() {
             statements: {
                 create: {
                     label: 'Personal',
-                    income: {
+                    incomes: {
                         create: {
                             label: 'Pay Check',
                             amount: 3000.0,

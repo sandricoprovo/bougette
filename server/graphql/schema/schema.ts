@@ -15,7 +15,7 @@ const typeDefs = gql`
     ${User}
     # Queries
     type Query {
-        allStatements: [Statement]!
+        allStatements(userId: String): [Statement]!
     }
     # Mutations
 `;

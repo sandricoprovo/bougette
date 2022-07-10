@@ -6,7 +6,7 @@ export const Statement = gql`
         label: String
         createdOn: String
         userId: String
-        income: [Income]!
+        incomes: [Income]!
         expenses: [Expense]!
     }
 `;

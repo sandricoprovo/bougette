@@ -44,7 +44,7 @@ model Statements {
     id        String     @id @default(uuid())
     label     String
     createdOn DateTime   @default(now()) @db.Timestamp()
-    income    Incomes[]
+    incomes   Incomes[]
     expenses  Expenses[]
     User      Users      @relation(fields: [userId], references: [id])
     userId    String
