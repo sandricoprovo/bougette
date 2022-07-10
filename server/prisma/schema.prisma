@@ -10,30 +10,42 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Income {
-    id          Int        @id @default(autoincrement())
+model Users {
+    id         String       @id @default(uuid())
+    firstName  String
+    lastName   String
+    email      String
+    statements Statements[]
+}
+
+model Incomes {
+    id          String     @id @default(uuid())
     label       String
     amount      Int
     type        String
     depositDate String
     isRecurring Boolean
-    Statement   Statement? @relation(fields: [statementId], references: [id])
-    statementId Int?
+    Statement   Statements @relation(fields: [statementId], references: [id])
+    statementId String
 }
 
-model Expense {
-    id           Int        @id @default(autoincrement())
+model Expenses {
+    id           String     @id @default(uuid())
     label        String
     amount       Int
     type         String
     withdrawDate String
     isRecurring  Boolean
-    Statement    Statement? @relation(fields: [statementId], references: [id])
-    statementId  Int?
+    Statement    Statements @relation(fields: [statementId], references: [id])
+    statementId  String
 }
 
-model Statement {
-    id       Int       @id @default(autoincrement())
-    income   Income[]
-    expenses Expense[]
+model Statements {
+    id        String     @id @default(uuid())
+    label     String
+    createdOn DateTime   @default(now()) @db.Timestamp()
+    income    Incomes[]
+    expenses  Expenses[]
+    User      Users      @relation(fields: [userId], references: [id])
+    userId    String
 }

@@ -2,12 +2,12 @@ import { gql } from 'apollo-server';
 
 export const Income = gql`
     type Income {
-        id: Int
+        id: String
         label: String
         amount: Int
         type: String
         depositDate: String
         isRecurring: Boolean
-        statementId: Int
+        statementId: String
     }
 `;

@@ -5,8 +5,8 @@ const prisma = new PrismaClient();
 const statementResolvers = {
     Query: {
         allStatements: async () => {
-            const statements = await prisma.statement.findMany();
-            console.log(statements);
+            const allStatements = await prisma.statements.findMany();
+            console.log(allStatements);
             return [];
         },
     },

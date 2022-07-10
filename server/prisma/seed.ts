@@ -3,49 +3,57 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function seed() {
-    const userStatement = await prisma.statement.create({
+    await prisma.users.create({
         data: {
-            income: {
+            firstName: 'Kakashi',
+            lastName: 'Hatake',
+            email: 'khatake@example.com',
+            statements: {
                 create: {
-                    label: 'Pay Check',
-                    amount: 3000.0,
-                    type: 'employment',
-                    isRecurring: true,
-                    depositDate: '28',
-                },
-            },
-            expenses: {
-                createMany: {
-                    data: [
-                        {
-                            label: 'rent',
-                            amount: 1000.0,
-                            type: 'essential',
+                    label: 'Personal',
+                    income: {
+                        create: {
+                            label: 'Pay Check',
+                            amount: 3000.0,
+                            type: 'employment',
                             isRecurring: true,
-                            withdrawDate: '14',
+                            depositDate: '28',
                         },
-                        {
-                            label: 'spotify',
-                            amount: 10.0,
-                            type: 'subscription',
-                            withdrawDate: '29',
-                            isRecurring: true,
+                    },
+                    expenses: {
+                        createMany: {
+                            data: [
+                                {
+                                    label: 'rent',
+                                    amount: 1000.0,
+                                    type: 'essential',
+                                    isRecurring: true,
+                                    withdrawDate: '14',
+                                },
+                                {
+                                    label: 'kunai',
+                                    amount: 10.0,
+                                    type: 'subscription',
+                                    withdrawDate: '29',
+                                    isRecurring: true,
+                                },
+                                {
+                                    label: 'ramen',
+                                    amount: 10.0,
+                                    type: 'leisure',
+                                    withdrawDate: '30',
+                                    isRecurring: true,
+                                },
+                                {
+                                    label: 'book club',
+                                    amount: 80.0,
+                                    type: 'subscription',
+                                    withdrawDate: '18',
+                                    isRecurring: false,
+                                },
+                            ],
                         },
-                        {
-                            label: 'crunchyRoll',
-                            amount: 10.0,
-                            type: 'subscription',
-                            withdrawDate: '30',
-                            isRecurring: true,
-                        },
-                        {
-                            label: 'softball',
-                            amount: 80.0,
-                            type: 'leisure',
-                            withdrawDate: '18',
-                            isRecurring: false,
-                        },
-                    ],
+                    },
                 },
             },
         },

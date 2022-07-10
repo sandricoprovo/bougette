@@ -8,7 +8,8 @@
         "build": "tsc -p tsconfig.json",
         "db:seed": "dotenv -e .env.local -- npx prisma db seed",
         "db:migrate": "dotenv -e .env.local -- npx prisma migrate dev --name",
-        "db:reset": "dotenv -e .env.local -- npx prisma migrate reset"
+        "db:reset": "dotenv -e .env.local -- npx prisma migrate reset",
+        "prisma:format": "dotenv -e .env.local -- npx prisma format"
     },
     "prisma": {
         "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
