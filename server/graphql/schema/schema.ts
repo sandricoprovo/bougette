@@ -16,13 +16,21 @@ const typeDefs = gql`
     # Queries
     type Query {
         allStatements(userId: String): [Statement]!
+        statement(userId: String, statementId: String): Statement!
     }
     # Mutations
+    type Mutation {
+        createStatement(userId: String, label: String): Statement!
+    }
 `;
 
 const resolvers = {
     Query: {
         allStatements: statementResolvers.Query.allStatements,
+        statement: statementResolvers.Query.statement,
+    },
+    Mutation: {
+        createStatement: statementResolvers.Mutation.createStatement,
     },
 };
 
