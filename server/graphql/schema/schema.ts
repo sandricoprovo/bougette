@@ -15,22 +15,30 @@ const typeDefs = gql`
     ${User}
     # Queries
     type Query {
+        # === STATEMENTS ===
         allStatements(userId: String): [Statement]!
         statement(userId: String, statementId: String): Statement!
     }
     # Mutations
     type Mutation {
+        # === STATEMENTS ===
         createStatement(userId: String, label: String): Statement!
+        updateStatement(userId: String, statementId: String): Statement!
+        deleteStatement(userId: String, statementId: String): Boolean!
     }
 `;
 
 const resolvers = {
     Query: {
-        allStatements: statementResolvers.Query.allStatements,
-        statement: statementResolvers.Query.statement,
+        // === STATEMENTS === //
+        allStatements: statementResolvers.Queries.allStatements,
+        statement: statementResolvers.Queries.statement,
     },
     Mutation: {
-        createStatement: statementResolvers.Mutation.createStatement,
+        // === STATEMENTS === //
+        createStatement: statementResolvers.Mutations.createStatement,
+        updateStatement: statementResolvers.Mutations.updateStatement,
+        deleteStatement: statementResolvers.Mutations.deleteStatement,
     },
 };
 
