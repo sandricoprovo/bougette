@@ -1,6 +1,7 @@
 import { gql } from 'apollo-server';
 
 import { statementResolvers } from '../resolvers/statements';
+import { incomeResolvers } from '../resolvers/incomes';
 
 import { User } from './user';
 import { Statement } from './statement';
@@ -25,6 +26,8 @@ const typeDefs = gql`
         createStatement(userId: String, label: String): Statement!
         updateStatement(userId: String, statementId: String): Statement!
         deleteStatement(userId: String, statementId: String): Boolean!
+        # === INCOMES ===
+        addStatementIncome(userId: String, statementId: String): Statement!
     }
 `;
 
@@ -39,6 +42,8 @@ const resolvers = {
         createStatement: statementResolvers.Mutations.createStatement,
         updateStatement: statementResolvers.Mutations.updateStatement,
         deleteStatement: statementResolvers.Mutations.deleteStatement,
+        // === INCOMES === //
+        addStatementIncome: incomeResolvers.Mutations.addStatementIncome,
     },
 };
 
