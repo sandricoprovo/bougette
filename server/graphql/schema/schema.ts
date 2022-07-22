@@ -4,16 +4,21 @@ import { statementResolvers } from '../resolvers/statements';
 import { incomeResolvers } from '../resolvers/incomes';
 
 import { User } from './user';
-import { Statement } from './statement';
-import { Income } from './income';
-import { Expense } from './expense';
+import { Statement, StatementInput } from './statement';
+import { Income, IncomeInput } from './income';
+import { Expense, ExpenseInput } from './expense';
+import { OperationStatus } from './operationStatus';
 
 const typeDefs = gql`
     # Types
     ${Income}
+    ${IncomeInput}
     ${Expense}
+    ${ExpenseInput}
     ${Statement}
+    ${StatementInput}
     ${User}
+    ${OperationStatus}
     # Queries
     type Query {
         # === STATEMENTS ===
@@ -24,8 +29,12 @@ const typeDefs = gql`
     type Mutation {
         # === STATEMENTS ===
         createStatement(userId: String, label: String): Statement!
-        updateStatement(userId: String, statementId: String): Statement!
-        deleteStatement(userId: String, statementId: String): Boolean!
+        updateStatement(
+            userId: String
+            statementId: String
+            updates: StatementInput
+        ): Statement!
+        deleteStatement(userId: String, statementId: String): OperationStatus!
         # === INCOMES ===
         addStatementIncome(userId: String, statementId: String): Statement!
     }

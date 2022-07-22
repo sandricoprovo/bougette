@@ -10,3 +10,9 @@ export const Statement = gql`
         expenses: [Expense]!
     }
 `;
+
+export const StatementInput = gql`
+    input StatementInput {
+        label: String!
+    }
+`;

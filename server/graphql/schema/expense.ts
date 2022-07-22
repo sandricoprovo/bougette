@@ -11,3 +11,13 @@ export const Expense = gql`
         statementId: String
     }
 `;
+
+export const ExpenseInput = gql`
+    input ExpenseInput {
+        label: String
+        amount: Int
+        type: String
+        withdrawDate: String
+        isRecurring: Boolean
+    }
+`;

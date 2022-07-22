@@ -1,5 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 
+import { StatementInput } from '../../../shared/types/statementInput';
+
 const prisma = new PrismaClient();
 
 const statementResolvers = {
@@ -81,53 +83,39 @@ const statementResolvers = {
         },
         updateStatement: async (
             _: any,
-            args: { userId: string; statementId: string }
+            args: {
+                userId: string;
+                statementId: string;
+                updates: StatementInput;
+            }
         ) => {
             try {
                 // TODO: Pass in values needed here
-                const { statementId, userId } = args;
+                const {
+                    statementId,
+                    userId,
+                    updates: { label: updatedLabel },
+                } = args;
 
+                // Finds previous statement so old values can be used as fallbacks
                 const upsertedStatement = await prisma.statements.upsert({
                     where: {
                         id: statementId,
                     },
-                    update: {},
+                    update: {
+                        label: updatedLabel,
+                    },
                     create: {
-                        label: 'Ramen Budget',
+                        label: updatedLabel,
                         User: {
                             connect: {
                                 id: userId,
                             },
                         },
-                        incomes: {
-                            createMany: {
-                                data: [1].map(() => {
-                                    const incomeEntry = {
-                                        label: 'Ramen Budget',
-                                        amount: 100,
-                                        depositDate: 'Oct 20, 2021',
-                                        type: 'leisure',
-                                        isRecurring: false,
-                                    };
-                                    return incomeEntry;
-                                }),
-                            },
-                        },
-                        expenses: {
-                            createMany: {
-                                data: [1].map(() => {
-                                    const expenseEntry = {
-                                        label: 'Ramen 1',
-                                        amount: 10.5,
-                                        withdrawDate: 'Nov 5, 2021',
-                                        type: 'leisure',
-                                        isRecurring: false,
-                                    };
-
-                                    return expenseEntry;
-                                }),
-                            },
-                        },
+                    },
+                    include: {
+                        incomes: true,
+                        expenses: true,
                     },
                 });
 
@@ -156,13 +144,15 @@ const statementResolvers = {
                 });
 
                 // Deletes the statement moving inside out via a SQL transaction
-                const transaction = await prisma.$transaction([
+                await prisma.$transaction([
                     deleteIncomes,
                     deleteExpenses,
                     deleteStatement,
                 ]);
 
-                console.log({ transaction });
+                return {
+                    succeeded: true,
+                };
             } catch (error) {
                 // TODO: Handle Error
                 return error;
